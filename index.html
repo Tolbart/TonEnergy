@@ -59,7 +59,8 @@
         let button = document.getElementById("button");
         button.addEventListener('click', showAd);
         const updateBalance = () => {
-        count.innerText = parseFloat(count.innerText) + 1;
+            count.innerText = parseFloat(count.innerText) + 1;
+        };   
         export function ShowAdButton() {
             const onReward = useCallback(() => {
                 alert('Reward');
