@@ -57,13 +57,13 @@
         let count = document.getElementById("balance")
         let tg = window.Telegram.WebApp;
         let button = document.getElementById("button");
-        
-
-        
+        button.addEventListener('click', showAd);
+        const updateBalance = () => {
+    count.innerText = parseFloat(count.innerText) + 1;
         export function ShowAdButton() {
             const onReward = useCallback(() => {
                 alert('Reward');
-            balance.addEventListener('Reward', count+1)
+                updateBalance();
             }, []);
             const onError = useCallback((result) => {
                 alert(JSON.stringify(result, null, 4));
@@ -73,7 +73,7 @@
              * insert your-block-id
              */
             const showAd = useAdsgram({ blockId: "1631", onReward, onError });
-            button.addEventListener('click', showAd);
+            
             return (
                 <button onClick={showAd}>Show Ad</button>
             )
