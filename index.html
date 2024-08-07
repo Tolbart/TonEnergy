@@ -38,21 +38,46 @@
             margin-top: 300px;
             border-radius: 10px;
             cursor: pointer;
-            
-        }
-        .video-button:hover {
-            background-color: purple;
         }
     </style>
-    
 </head>
 <body>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <div class="container">
-        <div class="balance"><p>ETon 0.00</p>Ton 0.00</div>
-        <div class="video-button" id=button>
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+     <div class="container">
+        <div class="balance" id="balance">0</div>
+        <div class="video-button" id="button">
             <b>Watch to earn a drop</b>
         </div>
     </div>
+     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        import { useCallback, ReactElement } from 'react'
+        import { useAdsgram } from "./hooks/useAdsgram.ts";
+        const AdController = window.Adsgram.init({ blockId: "1631" });
+        let count = document.getElementById("balance")
+        let tg = window.Telegram.WebApp;
+        let button = document.getElementById("button");
+        
+
+        
+        export function ShowAdButton() {
+            const onReward = useCallback(() => {
+                alert('Reward');
+            balance.addEventListener('Reward', count+1)
+            }, []);
+            const onError = useCallback((result) => {
+                alert(JSON.stringify(result, null, 4));
+            }, []);
+
+            /**
+             * insert your-block-id
+             */
+            const showAd = useAdsgram({ blockId: "1631", onReward, onError });
+            button.addEventListener('click', showAd);
+            return (
+                <button onClick={showAd}>Show Ad</button>
+            )
+        }
+
 </body>
 </html>
