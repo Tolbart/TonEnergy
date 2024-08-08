@@ -80,6 +80,8 @@
             let balance = 0.00;
             function tapping() {
                 balance += 0.01
+                balanceElement.textContent = balance
+            }    
             function handleAdViewed() {
                 balance += 1;
                 balanceElement.textContent = balance;
