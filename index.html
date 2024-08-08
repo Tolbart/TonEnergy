@@ -40,72 +40,35 @@
             cursor: pointer;
         }
     </style>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script> 
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 </head>
 <body>
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
      <div class="container">
         <div class="balance" id="balance">0</div>
         <div class="video-button" id="button">
             <b>Watch to earn a drop</b>
         </div>
     </div>
-    <script> import { useCallback, useEffect, useRef } from 'react';
+        <script>
+            const AdController = window.Adsgram.init({ blockId: "1631" });
+            const button = document.getElementById('button');
+            button.addEventListener('click', () => {
+                AdController.show().then((result) => {
+                    alert('Reward');
+                }).catch((result) => {
+                    alert(JSON.stringify(result, null, 4));
+                })
+            })
+            const balanceElement = document.getElementById('balance');
+            let balance = 0;
+            function handleAdViewed() {
+                balance += 1;
+                balanceElement.textContent = balance;
+            }
+            button.addEventListener('click', handleAdViewed);
 
-export function useAdsgram({ blockId, onReward, onError }) {
-  const AdControllerRef = useRef(undefined);
-
-  useEffect(() => {
-    AdControllerRef.current = window.Adsgram?.init({ blockId });
-  }, [blockId]);
-
-  return useCallback(async () => {
-    if (AdControllerRef.current) {
-      AdControllerRef.current
-        .show()
-        .then(() => {
-          // user watch ad till the end
-          onReward();
-        })
-        .catch((result) => {
-          // user get error during playing ad or skip ad
-          onError?.(result);
-        });
-    } else {
-      onError?.({
-        error: true,
-        done: false,
-        state: 'load',
-        description: 'Adsgram script not loaded',
-      });
-    }
-  }, [onError, onReward]);
-}
-    </script>
-     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        import { useCallback, ReactElement } from 'react'
-        import { useAdsgram } from "./hooks/useAdsgram.js";
-        const AdController = window.Adsgram.init({ blockId: "1631" });
-        let count = document.getElementById("balance")
-        let tg = window.Telegram.WebApp;
-        let button = document.getElementById("button");
-        button.addEventListener('click', showAd);
-        const updateBalance = () => {
-            count.innerText = parseFloat(count.innerText) + 1;
-        };   
-        export function ShowAdButton() {
-            const onReward = useCallback(() => {
-                alert('Reward');
-                updateBalance();
-            }, []);
-            const onError = useCallback((result) => {
-                alert(JSON.stringify(result, null, 4));
-            }, []);
-            const showAd = useAdsgram({ blockId: "1631", onReward, onError });
-            return (
-                <button onClick={showAd}>Show Ad</button>
-            )
-        }
-
+        </script>
+      
 </body>
 </html>
