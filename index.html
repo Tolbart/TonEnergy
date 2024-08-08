@@ -52,15 +52,15 @@
     </div>
         <script>
             let tg = window.Telegram.WebApp;
-            const AdController = window.Adsgram.init({ blockId: "1631" });
-            const button = document.getElementById('button');
-            button.addEventListener('click', () => {
-                AdController.show().then((result) => {
-                    alert('Reward');
-                }).catch((result) => {
-                    alert(JSON.stringify(result, null, 4));
-                })
-            })
+            //const AdController = window.Adsgram.init({ blockId: "1631" });
+            //const button = document.getElementById('button');
+            //button.addEventListener('click', () => {
+            //   AdController.show().then((result) => {
+            //        alert('Reward');
+            //    }).catch((result) => {
+            //        alert(JSON.stringify(result, null, 4));
+            //    })
+          //  })
             const balanceElement = document.getElementById('balance');
             let balance = 0;
             function handleAdViewed() {
