@@ -49,10 +49,42 @@
             <b>Watch to earn a drop</b>
         </div>
     </div>
+    <script> import { useCallback, useEffect, useRef } from 'react';
+
+export function useAdsgram({ blockId, onReward, onError }) {
+  const AdControllerRef = useRef(undefined);
+
+  useEffect(() => {
+    AdControllerRef.current = window.Adsgram?.init({ blockId });
+  }, [blockId]);
+
+  return useCallback(async () => {
+    if (AdControllerRef.current) {
+      AdControllerRef.current
+        .show()
+        .then(() => {
+          // user watch ad till the end
+          onReward();
+        })
+        .catch((result) => {
+          // user get error during playing ad or skip ad
+          onError?.(result);
+        });
+    } else {
+      onError?.({
+        error: true,
+        done: false,
+        state: 'load',
+        description: 'Adsgram script not loaded',
+      });
+    }
+  }, [onError, onReward]);
+}
+    </script>
      <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         import { useCallback, ReactElement } from 'react'
-        import { useAdsgram } from "./hooks/useAdsgram.ts";
+        import { useAdsgram } from "./hooks/useAdsgram.js";
         const AdController = window.Adsgram.init({ blockId: "1631" });
         let count = document.getElementById("balance")
         let tg = window.Telegram.WebApp;
