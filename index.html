@@ -78,13 +78,13 @@
            // })
             
             const balanceElement = document.getElementById('balance');
-            let balance = 0.00;
+            let balance = 0;
             function tapping() {
-                balance += 0.01
+                balance += 1
                 balanceElement.textContent = balance
             }    
             function handleAdViewed() {
-                balance += 1;
+                balance += 100;
                 balanceElement.textContent = balance;
             }
             button.addEventListener('click', handleAdViewed);
