@@ -57,7 +57,7 @@
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 </head>
 <body>
-    <div class="miner">Tap</div>
+    <div class="miner" id="mine"><b>Tap</b></div>
      <div class="container">
          <div class="balance" id="balance">0</div>
         <div class="video-button" id="button">
@@ -65,7 +65,7 @@
         </div>
     </div>
         <script>
-          //  let tg = window.Telegram.WebApp;
+          let tg = window.Telegram.WebApp;
           //  const AdController = window.Adsgram.init({ blockId: "1631" });
           //  const button = document.getElementById('button');
           //  button.addEventListener('click', () => {
@@ -75,14 +75,17 @@
             //        alert(JSON.stringify(result, null, 4));
             //    })
            // })
+            
             const balanceElement = document.getElementById('balance');
-            let balance = 0;
+            let balance = 0.00;
+            function tapping() {
+                balance += 0.01
             function handleAdViewed() {
                 balance += 1;
                 balanceElement.textContent = balance;
             }
             button.addEventListener('click', handleAdViewed);
-
+            mine.addEventListener('click', tapping);
         </script>
       
 </body>
