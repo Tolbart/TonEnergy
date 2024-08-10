@@ -70,7 +70,7 @@
         </div>
     </div>
         <script>
-         // let tg = window.Telegram.WebApp;
+         let tg = window.Telegram.WebApp;
           //  const AdController = window.Adsgram.init({ blockId: "1631" });
           //  const button = document.getElementById('button');
           //  button.addEventListener('click', () => {
@@ -93,6 +93,10 @@
             }
             button.addEventListener('click', handleAdViewed);
             mine.addEventListener('click', tapping);
+            let data = {
+                balance: balance
+            }
+            tg.sendData(JSON.stringyfy(data));
         </script>
       
 </body>
