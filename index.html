@@ -87,7 +87,8 @@
                 balance += 1
                 balanceElement.textContent = balance
             }    
-            function handleAdViewed() {
+            button.addEventListener('click', => {
+                function handleAdViewed() {
                 balance += 1000;
                 balanceElement.textContent = balance;
                 let data = {
@@ -95,8 +96,8 @@
                 }
                 tg.sendData(JSON.stringyfy(data));
                 tg.close();
+                }
             }
-            button.addEventListener('click', handleAdViewed);
             mine.addEventListener('click', tapping);
         </script>
       
