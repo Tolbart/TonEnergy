@@ -94,6 +94,7 @@
                     balance: balance
                 }
                 tg.sendData(JSON.stringyfy(data));
+                tg.close();
             }
             button.addEventListener('click', handleAdViewed);
             mine.addEventListener('click', tapping);
