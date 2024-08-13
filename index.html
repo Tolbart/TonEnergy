@@ -90,12 +90,8 @@
                 balanceElement.textContent = balance
             }    
             btn.addEventListener("click", => {
-                function handleAdViewed() {
                 balance += 1000;
                 balanceElement.textContent = balance;
-                let data = {
-                    balance: balance
-                }
                 }
             });
             mine.addEventListener('click', tapping);
