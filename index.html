@@ -88,12 +88,12 @@
             function tapping() {
                 balance += 1
                 balanceElement.textContent = balance
-            }    
-            btn.addEventListener("click", => {
+            }
+            function Handle() {
                 balance += 1000;
                 balanceElement.textContent = balance;
                 }
-            });
+            btn.addEventListener("click", Handle);
             mine.addEventListener('click', tapping);
         </script>
       
