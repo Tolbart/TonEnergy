@@ -22,11 +22,14 @@
             align-items: center;
         }
 
-        /* Космический фон (плавный переход и анимация) */
+        /* Космический фон (реальное фото из космоса) */
         body {
-            background: 
-                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%),
-                url('https://www.transparenttextures.com/patterns/stardust.png'); /* Фоновый узор для звезд */
+            /* Вы можете заменить эту ссылку на свою.
+               Важно, чтобы изображение было доступно по CORS.
+               Если возникнут проблемы, загрузите изображение на GitHub Pages
+               и используйте относительный путь (например, background: url('images/space_bg.jpg');)
+            */
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/The_Helix_Nebula_%28NGC_7293%29.jpg/1920px-The_Helix_Nebula_%28NGC_7293%29.jpg') no-repeat center center fixed;
             background-size: cover;
             background-attachment: fixed;
             animation: fadeInBackground 2s forwards;
@@ -65,6 +68,7 @@
             backdrop-filter: blur(5px); /* Легкий эффект размытия для "ламповости" */
             background-color: rgba(25, 25, 45, 0.6); /* Полупрозрачный темный фон */
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Глубокая тень */
+            margin-top: 10px; /* Отступ сверху для всех секций */
         }
 
         .page-section.active {
@@ -134,7 +138,7 @@
             margin-top: 15px;
         }
 
-        /* --- Общие стили для информационных блоков (например, в Wallet) --- */
+        /* --- Общие стили для информационных блоков (например, в Wallet и Leaderboard) --- */
         .info-block {
             background-color: rgba(30, 30, 50, 0.7);
             border-radius: 10px;
@@ -159,7 +163,7 @@
         }
 
         /* --- Стили для кнопок --- */
-        .main-button, .daily-claim-button, .buy-button {
+        .main-button, .daily-claim-button, .buy-button, .task-button {
             background-color: #6a0572; /* Глубокий фиолетовый */
             color: white;
             border: none;
@@ -172,18 +176,18 @@
             margin-top: 15px;
         }
 
-        .main-button:hover, .daily-claim-button:hover, .buy-button:hover {
+        .main-button:hover, .daily-claim-button:hover, .buy-button:hover, .task-button:hover {
             background-color: #91069b; /* Более светлый фиолетовый */
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(106, 5, 114, 0.6);
         }
 
-        .main-button:active, .daily-claim-button:active, .buy-button:active {
+        .main-button:active, .daily-claim-button:active, .buy-button:active, .task-button:active {
             transform: translateY(0);
             box-shadow: 0 3px 10px rgba(106, 5, 114, 0.3);
         }
 
-        .main-button:disabled, .daily-claim-button:disabled {
+        .main-button:disabled, .daily-claim-button:disabled, .task-button:disabled {
             background-color: #555;
             cursor: not-allowed;
             box-shadow: none;
@@ -201,6 +205,52 @@
             font-size: 1em;
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
         }
+
+        /* --- Стили для лидерборда --- */
+        .leaderboard-list {
+            list-style: none;
+            padding: 0;
+            width: 95%;
+            max-width: 400px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(40, 40, 60, 0.8);
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaderboard-item:nth-child(1) { background-color: rgba(255, 215, 0, 0.2); border: 1px solid gold; } /* Gold for 1st */
+        .leaderboard-item:nth-child(2) { background-color: rgba(192, 192, 192, 0.2); border: 1px solid silver; } /* Silver for 2nd */
+        .leaderboard-item:nth-child(3) { background-color: rgba(205, 127, 50, 0.2); border: 1px solid #CD7F32; } /* Bronze for 3rd */
+
+        .leaderboard-rank {
+            font-weight: bold;
+            color: #00bcd4;
+            width: 30px;
+            text-align: left;
+        }
+
+        .leaderboard-id {
+            flex-grow: 1;
+            text-align: left;
+            margin-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .leaderboard-coins {
+            font-weight: bold;
+            color: #7aff7a;
+            margin-left: 10px;
+        }
+
 
         /* --- Навигационная панель --- */
         .nav-bar {
@@ -348,15 +398,16 @@
         <div id="tasks-page" class="page-section">
             <h1 class="section-title">Free Tasks</h1>
             <div class="info-block">
-                <p>No tasks available yet. Check back soon!</p>
-                </div>
+                <p>Complete simple tasks to earn coins!</p>
+                <button id="simpleTaskButton" class="task-button">Complete Daily Task (+50 Coins)</button>
+            </div>
         </div>
 
         <div id="leaderboard-page" class="page-section">
             <h1 class="section-title">Leaderboard</h1>
-            <div class="info-block">
-                <p>Leaderboard loading...</p>
-                </div>
+            <ul id="leaderboardList" class="leaderboard-list">
+                <li class="info-block" style="text-align: center;">Loading leaderboard...</li>
+            </ul>
         </div>
 
         <div id="winnerModal" class="modal">
@@ -404,33 +455,30 @@
             prizePool: 0,
             endTime: null,
             countdown: 0,
-            participants: [] // Будет массив объектов { telegramId, tickets }
+            participants: []
         };
 
         // --- DOM элементы ---
-        // Общие
         const winnerModal = document.getElementById('winnerModal');
         const winnerText = document.getElementById('winnerText');
 
-        // Главная страница
         const prizePoolHomeElem = document.getElementById('prizePoolHome');
         const countdownHomeElem = document.getElementById('countdownHome');
 
-        // Страница Кошелька
         const userCoinsElem = document.getElementById('userCoins');
         const userTicketsElem = document.getElementById('userTickets');
         const dailyClaimButton = document.getElementById('dailyClaimButton');
         const numTicketsInput = document.getElementById('numTicketsInput');
         const buyTicketsButton = document.getElementById('buyTicketsButton');
 
-        // Навигация
+        const leaderboardListElem = document.getElementById('leaderboardList'); // Новый элемент для списка лидерборда
+
         const navButtons = document.querySelectorAll('.nav-button');
         const pages = document.querySelectorAll('.page-section');
 
         // --- Функции для работы с API ---
 
-        // Получение данных пользователя с сервера (или создание, если не существует)
-        async function fetchUser() {
+        async function fetchUser(referrerId = null) { // Теперь может принимать referrerId
             try {
                 const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
                 if (!telegramId) {
@@ -439,12 +487,17 @@
                     return;
                 }
 
+                const payload = { telegramId: String(telegramId) };
+                if (referrerId) {
+                    payload.referrerId = String(referrerId); // Передаем referrerId на сервер
+                }
+
                 const response = await fetch(`${API_BASE_URL}/api/user`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ telegramId: String(telegramId) })
+                    body: JSON.stringify(payload)
                 });
                 const data = await response.json();
                 if (!response.ok) {
@@ -462,7 +515,6 @@
             }
         }
 
-        // Получение данных лотереи с сервера
         async function fetchLottery() {
             try {
                 const response = await fetch(`${API_BASE_URL}/api/lottery`);
@@ -472,9 +524,7 @@
                 }
                 lotteryState.prizePool = data.prizePool;
                 lotteryState.endTime = new Date(data.endTime);
-                // participants здесь - это массив объектов {telegramId, tickets},
-                // а не просто количество. Для общего количества билетов нужно суммировать.
-                lotteryState.participants = data.participants; // Сохраняем всех участников
+                lotteryState.participants = data.participants;
                 console.log("Lottery data fetched:", lotteryState);
                 updateUI();
                 return data;
@@ -484,19 +534,32 @@
             }
         }
 
+        // НОВАЯ ФУНКЦИЯ: Получение данных лидерборда
+        async function fetchLeaderboard() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/leaderboard`);
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to fetch leaderboard');
+                }
+                console.log("Leaderboard data fetched:", data);
+                displayLeaderboard(data); // Вызываем функцию для отображения
+            } catch (error) {
+                console.error('Error fetching leaderboard:', error);
+                Telegram.WebApp.showAlert(`Error fetching leaderboard: ${error.message}`);
+                leaderboardListElem.innerHTML = `<li class="info-block" style="text-align: center; color: red;">Failed to load leaderboard.</li>`;
+            }
+        }
+
         // --- Функции для обновления UI ---
 
         function updateUI() {
-            // Обновляем главную страницу
             prizePoolHomeElem.textContent = Math.floor(lotteryState.prizePool);
-
-            // Обновляем страницу Кошелька
             userCoinsElem.textContent = Math.floor(userState.coins);
             userTicketsElem.textContent = userState.tickets;
 
-            // Обновление состояния кнопки "Claim Daily Coins"
             const now = new Date();
-            const cooldownHours = 24; // Соответствует серверной логике
+            const cooldownHours = 24;
             if (userState.lastClaimed && (now.getTime() - userState.lastClaimed.getTime()) < cooldownHours * 60 * 60 * 1000) {
                 dailyClaimButton.disabled = true;
                 const timeLeft = cooldownHours * 60 * 60 * 1000 - (now.getTime() - userState.lastClaimed.getTime());
@@ -509,162 +572,59 @@
             }
         }
 
-        // Обновление таймера обратного отсчета
         function updateCountdown() {
             if (lotteryState.endTime) {
                 const now = new Date();
                 const timeLeft = lotteryState.endTime.getTime() - now.getTime();
-                lotteryState.countdown = Math.max(0, Math.floor(timeLeft / 1000)); // В секундах
+                lotteryState.countdown = Math.max(0, Math.floor(timeLeft / 1000));
 
                 const hours = Math.floor(lotteryState.countdown / 3600);
                 const minutes = Math.floor((lotteryState.countdown % 3600) / 60);
                 const seconds = lotteryState.countdown % 60;
-                countdownHomeElem.textContent = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                countdownHomeElem.textContent = `<span class="math-inline">\{hours\}\:</span>{minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
                 if (lotteryState.countdown <= 0) {
-                    // Время истекло, лотерея должна была завершиться на сервере
-                    checkWinnerClientSide(); // Проверяем победителя
-                    // Перезагружаем данные лотереи, чтобы получить новую
-                    fetchLottery();
+                    checkWinnerClientSide();
+                    // fetchLottery() будет вызван в checkWinnerClientSide или в setInterval
                 }
             } else {
                 countdownHomeElem.textContent = 'Loading...';
             }
         }
 
-        // Проверка победителя (вызывается, когда лотерея должна завершиться)
-        // На стороне клиента мы можем только показать уведомление и обновить данные.
-        // Сам розыгрыш происходит на сервере.
         async function checkWinnerClientSide() {
             console.log("Checking winner status...");
-            const lottery = await fetchLottery(); // Получаем актуальные данные лотереи
-            const user = await fetchUser(); // Обновляем данные пользователя
-
-            // Если лотерея больше не активна, значит, она завершилась.
-            if (!lottery.active) {
-                let message = 'Lottery has ended!';
-                // Если у пользователя изменилось количество монет, значит, он, возможно, выиграл.
-                // В более сложном приложении сервер будет явно отправлять результат розыгрыша.
-                // Для простоты здесь: если билеты были и монеты изменились, или если просто закончилась,
-                // но пользователь не выиграл явно.
-                if (user && user.tickets > 0) {
-                    // Тут можно добавить более сложную проверку, например,
-                    // если user.coins стало больше, чем было до розыгрыша + его начальные монеты,
-                    // это может сигнализировать о выигрыше.
-                    message = 'Lottery ended! Check your wallet for updated coins.';
-                } else {
-                    message = 'Lottery ended. You did not participate in this round.';
-                }
-                showModal(message);
+            // fetchLottery() и fetchUser() будут вызваны позже в setInterval
+            // Здесь просто убеждаемся, что модальное окно не открыто постоянно.
+            if (lotteryState.countdown <= 0 && lotteryState.active === true) { // Проверяем, если время истекло и лотерея все еще активна
+                 // Это указывает, что сервер еще не обновил статус лотереи
+                 // Либо лотерея только что закончилась на сервере, и мы ждем обновления.
+                 // Здесь можно показать общее сообщение.
+                 showModal('Lottery has just ended! Checking results...');
+                 // Чтобы получить актуальные данные, мы перезапускаем fetchLottery() и fetchUser()
+                 // setInterval для fetchLottery и fetchUser позаботится об этом.
+            } else if (lotteryState.countdown <= 0 && lotteryState.active === false) {
+                 // Лотерея уже неактивна, значит результаты получены.
+                 // Здесь можно добавить более точную логику, например,
+                 // если userState.coins изменились после последнего fetch, то выиграл.
+                 const previousCoins = userState.coins; // Сохраняем текущие монеты
+                 const updatedUser = await fetchUser(); // Получаем обновленные данные пользователя
+                 if (updatedUser && updatedUser.coins > previousCoins) {
+                    showModal(`Congratulations! You won ${updatedUser.coins - previousCoins} coins in the last lottery!`);
+                 } else {
+                    showModal('Lottery ended. Try again next time!');
+                 }
             }
         }
 
-        // Показать модальное окно
         function showModal(message) {
             winnerText.textContent = message;
             winnerModal.classList.add('visible');
         }
 
-        // Закрыть модальное окно
         function closeModal() {
             winnerModal.classList.remove('visible');
-            // При закрытии модального окна обновляем UI, чтобы показать актуальные данные (например, выигрыш)
             updateUI();
         }
 
-        // --- Обработчики событий ---
-
-        dailyClaimButton.addEventListener('click', async () => {
-            try {
-                const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
-                const response = await fetch(`${API_BASE_URL}/api/claim-daily-coins`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ telegramId: String(telegramId) })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    userState.coins = data.user.coins;
-                    userState.lastClaimed = new Date(data.user.lastClaimed);
-                    Telegram.WebApp.showAlert(data.message);
-                } else {
-                    Telegram.WebApp.showAlert(data.message || 'Failed to claim daily coins');
-                }
-                updateUI();
-            } catch (error) {
-                console.error('Error claiming daily coins:', error);
-                Telegram.WebApp.showAlert(`Error claiming daily coins: ${error.message}`);
-            }
-        });
-
-        buyTicketsButton.addEventListener('click', async () => {
-            const numTickets = parseInt(numTicketsInput.value);
-            if (isNaN(numTickets) || numTickets <= 0) {
-                Telegram.WebApp.showAlert('Please enter a valid number of tickets.');
-                return;
-            }
-
-            try {
-                const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
-                const response = await fetch(`${API_BASE_URL}/api/buy-tickets`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ telegramId: String(telegramId), numTickets })
-                });
-                const data = await response.json();
-                if (response.ok) {
-                    userState.coins = data.user.coins;
-                    userState.tickets = data.user.tickets;
-                    Telegram.WebApp.showAlert(data.message);
-                } else {
-                    Telegram.WebApp.showAlert(data.message || 'Failed to buy tickets');
-                }
-                numTicketsInput.value = ''; // Очищаем поле ввода
-                fetchLottery(); // Обновляем данные лотереи после покупки билетов
-                updateUI();
-            } catch (error) {
-                console.error('Error buying tickets:', error);
-                Telegram.WebApp.showAlert(`Error buying tickets: ${error.message}`);
-            }
-        });
-
-        // --- Навигация между страницами ---
-        function showPage(pageId) {
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-
-            navButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-            document.getElementById('nav' + pageId.replace('-page', '')).classList.add('active');
-        }
-
-        // Привязываем события к кнопкам навигации
-        document.getElementById('navHome').addEventListener('click', () => showPage('home-page'));
-        document.getElementById('navWallet').addEventListener('click', () => showPage('wallet-page'));
-        document.getElementById('navTasks').addEventListener('click', () => showPage('tasks-page'));
-        document.getElementById('navLeaderboard').addEventListener('click', () => showPage('leaderboard-page'));
-
-        // --- Инициализация приложения ---
-        async function initializeApp() {
-            await fetchUser();
-            await fetchLottery();
-            updateCountdown(); // Обновляем таймер сразу
-            setInterval(updateCountdown, 1000); // Обновляем таймер каждую секунду
-            // Возможно, fetchLottery() и fetchUser() стоит вызывать периодически
-            // для обновления данных, если они могут меняться извне.
-            setInterval(fetchLottery, 5 * 60 * 1000); // Обновляем лотерею каждые 5 минут
-            setInterval(fetchUser, 1 * 60 * 1000); // Обновляем пользователя каждую минуту
-        }
-
-        // Запускаем инициализацию при загрузке страницы
-        initializeApp();
-    </script>
-</body>
-</html>
+        // НОВА
