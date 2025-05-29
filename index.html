@@ -13,6 +13,7 @@
             width: 100%;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
+            background-color: #1a1a2e; /* Темный фон */
         }
         body {
             background: url('https://dwg31ai31okv0.cloudfront.net/images/Article_Images/ImageForArticle_549_17288689857007544.jpg') no-repeat center center fixed;
@@ -32,403 +33,485 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон для контейнера */
+            border-radius: 10px;
         }
-        .tab {
-            display: none;
+        .header {
             width: 100%;
             text-align: center;
+            margin-bottom: 20px;
         }
-        .tab.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .header h1 {
+            font-size: 2.5em;
+            color: #e9c46a;
+            margin-bottom: 10px;
         }
-        .user-info {
-            position: absolute;
-            top: 20px;
-            font-size: 18px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        .header p {
+            font-size: 1.1em;
+            color: #ccc;
         }
-        .prize-info, .tasks-list, .buy-coins {
-            margin: 25px 0;
-            background: rgba(20, 20, 40, 0.8);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            width: 100%;
-            max-width: 400px;
+        .balance-section {
+            background-color: #2a2a4a;
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
         }
-        #tickets .ticket-container {
-            margin: 25px 0;
-            background: rgba(20, 20, 40, 0.4);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            width: 100%;
-            max-width: 400px;
+        .balance-section p {
+            margin: 0;
+            font-size: 1.2em;
         }
-        .task {
-            margin: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(50, 50, 80, 0.6);
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        button {
-            padding: 20px 30px;
-            margin: 10px 0;
-            background: linear-gradient(45deg, #6b5b95, #957fef);
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            font-size: 18px;
+        .balance-section span {
             font-weight: bold;
+            color: #28a745;
+        }
+        .daily-claim-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 0.9em;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 6px 15px rgba(107, 91, 149, 0.4);
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(107, 91, 149, 0.6);
+        .daily-claim-button:hover {
+            background-color: #0056b3;
         }
-        button:disabled {
-            background: #3a3a5c;
-            box-shadow: none;
+        .daily-claim-button:disabled {
+            background-color: #cccccc;
             cursor: not-allowed;
         }
-        input {
-            padding: 15px;
-            margin: 15px 0;
-            width: 100%;
-            max-width: 400px;
-            border: none;
-            border-radius: 15px;
-            background: rgba(50, 50, 80, 0.6);
-            color: #fff;
-            font-size: 16px;
-            box-sizing: border-box;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+        .lottery-details {
+            background-color: #343a40;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        input::placeholder {
-            color: #b0b0d0;
+        .lottery-details h2 {
+            color: #e9c46a;
+            margin-bottom: 15px;
         }
-        h2 {
-            color: #d8d8ff;
-            margin-bottom: 20px;
-            font-size: 24px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        .lottery-details p {
+            margin: 5px 0;
+            font-size: 1.1em;
         }
-        p {
-            margin: 10px 0;
-            font-size: 16px;
-            color: #e0e0ff;
+        .lottery-details span {
+            font-weight: bold;
+            color: #28a745;
         }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
+        .countdown {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #f44336;
+            margin-top: 10px;
         }
-        .modal-content {
-            background: rgba(20, 20, 40, 0.8);
-            margin: 20% auto;
-            padding: 25px;
+        .buy-tickets-section {
+            background-color: #2a2a4a;
+            border-radius: 8px;
+            padding: 20px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .buy-tickets-section h3 {
+            color: #e9c46a;
+            margin-bottom: 15px;
+        }
+        .ticket-input {
             width: 80%;
-            max-width: 350px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-        }
-        .lot-title {
-            text-align: center;
-            font-size: 48px;
-            font-weight: bold;
-            color: #957fef;
-            text-shadow: 0 0 10px rgba(149, 127, 239, 0.8);
-            margin: 20px 0;
-        }
-        .black-hole {
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-            background: radial-gradient(circle, #000 10%, #1a1a1a 30%, transparent 70%);
-            border-radius: 50%;
-            position: relative;
-            animation: spin 10s linear infinite;
-            box-shadow: 0 0 80px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(255, 255, 255, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .black-hole::before {
-            content: var(--max-prize, "1$");
-            font-size: 48px;
-            font-weight: bold;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #333;
             color: #fff;
-            text-shadow: 0 0 15px #6b5b95;
-            position: absolute;
+            font-size: 1em;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .buy-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .buy-button:hover {
+            background-color: #218838;
         }
         .nav-bar {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a1a2e;
             display: flex;
             justify-content: space-around;
-            width: 90%;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .nav-button {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 5px;
+        }
+        .nav-button:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .nav-button.active {
+            color: #e9c46a;
+            font-weight: bold;
+            background-color: rgba(233, 196, 106, 0.2);
+        }
+
+        /* Модальное окно победителя */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed; /* Оставаться на месте */
+            z-index: 1; /* Поверх всего */
+            left: 0;
+            top: 0;
+            width: 100%; /* Полная ширина */
+            height: 100%; /* Полная высота */
+            overflow: auto; /* Включить прокрутку, если нужно */
+            background-color: rgba(0,0,0,0.7); /* Черный с прозрачностью */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #333;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%; /* Или любая другая желаемая ширина */
             max-width: 400px;
-            background: rgba(20, 20, 40, 0.8);
-            padding: 10px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            z-index: 999;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: #fff;
         }
-        .nav-bar button {
-            padding: 15px 20px;
-            margin: 0 5px;
-            width: auto;
-            font-size: 16px;
-            background: linear-gradient(45deg, #6b5b95, #957fef);
-            box-shadow: 0 4px 10px rgba(107, 91, 149, 0.4);
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
         }
-        .nav-bar button.active {
-            background: linear-gradient(45deg, #957fef, #d4c1ec);
-            box-shadow: 0 6px 15px rgba(149, 127, 239, 0.6);
+        .close-button:hover,
+        .close-button:focus {
+            color: #e9c46a;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-content h2 {
+            color: #e9c46a;
+            margin-bottom: 20px;
+        }
+        .modal-content p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .modal-content button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .modal-content button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Main Page -->
-        <div id="home" class="tab active">
-            <div class="user-info" id="userInfo"></div>
-            <div class="lot-title">LOT</div>
-            <div class="black-hole"></div>
-            <div class="prize-info">
-                <p>Prize Pool: <span id="prize">1000</span> coins</p>
-                <p>Draw in: <span id="countdown">24:00:00</span></p>
-            </div>
+        <div class="header">
+            <h1>TON Energy Lottery</h1>
+            <p>Win big with your tickets!</p>
         </div>
 
-        <!-- Tickets Page -->
-        <div id="tickets" class="tab">
-            <div class="ticket-container">
-                <h2>Buy Tickets</h2>
-                <p>Your Balance: <span id="balance1">0</span> coins</p>
-                <p>Your Tickets: <span id="userTickets">0</span></p>
-                <p>Ticket Price: 10 coins</p>
-                <button onclick="buyTickets(1)">Buy 1 Ticket (10 coins)</button>
-                <button onclick="buyTickets(5)">Buy 5 Tickets (50 coins)</button>
-                <button onclick="buyTickets(10)">Buy 10 Tickets (100 coins)</button>
-            </div>
+        <div class="balance-section">
+            <p>Your Coins: <span id="userCoins">0</span></p>
+            <p>Your Tickets: <span id="userTickets">0</span></p>
+            <button id="dailyClaimButton" class="daily-claim-button">Claim Daily Coins</button>
         </div>
 
-        <!-- Tasks Page -->
-        <div id="tasks" class="tab">
-            <h2>Tasks & Coins</h2>
-            <p>Your Balance: <span id="balance2">0</span> coins</p>
-            <div class="tasks-list" id="tasksList"></div>
-            <div class="buy-coins">
-                <h3>Top Up Balance</h3>
-                <button onclick="buyCoins(100)">+100 coins</button>
-                <button onclick="buyCoins(500)">+500 coins</button>
-                <button onclick="buyCoins(1000)">+1000 coins</button>
-            </div>
+        <div class="lottery-details">
+            <h2>Current Lottery</h2>
+            <p>Prize Pool: <span id="prizePool">0</span> coins</p>
+            <p>Time Left: <span id="countdown">Loading...</span></p>
+            <p>Total Participants: <span id="totalParticipants">0</span></p>
         </div>
 
-        <!-- Winner Modal -->
-        <div id="winnerModal" class="modal">
-            <div class="modal-content">
-                <h2>Lottery Finished!</h2>
-                <p id="winnerText"></p>
-                <button onclick="closeModal()">Close</button>
-            </div>
+        <div class="buy-tickets-section">
+            <h3>Buy Tickets</h3>
+            <input type="number" id="numTicketsInput" class="ticket-input" placeholder="Number of tickets" min="1">
+            <button id="buyTicketsButton" class="buy-button">Buy Tickets (10 coins each)</button>
         </div>
 
-        <!-- Navigation Bar -->
         <div class="nav-bar">
-            <button id="navHome" onclick="switchTab('home')">Lottery</button>
-            <button id="navTickets" onclick="switchTab('tickets')">Tickets</button>
-            <button id="navTasks" onclick="switchTab('tasks')">Tasks</button>
+            <button class="nav-button" id="navHome">Home</button>
+            <button class="nav-button" id="navLeaderboard">Leaderboard</button>
+            <button class="nav-button" id="navHelp">Help</button>
+        </div>
+    </div>
+
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Lottery Result</h2>
+            <p id="winnerText"></p>
+            <button onclick="closeModal()">OK</button>
         </div>
     </div>
 
     <script>
-        // Telegram Web App Initialization
-        const TelegramWebApp = window.Telegram.WebApp;
-        TelegramWebApp.ready();
+        // Инициализация Web App
+        Telegram.WebApp.ready();
 
-        const userId = TelegramWebApp.initDataUnsafe?.user?.id || 'test_user';
-        const username = TelegramWebApp.initDataUnsafe?.user?.username || 'Player';
-        const API_URL = 'https://e4e0-181-214-173-129.ngrok-free.app'; 
+        // Получаем API_BASE_URL из URL параметров.
+        // Это позволяет боту динамически передавать нам актуальный ngrok URL.
+        const urlParams = new URLSearchParams(window.location.search);
+        // Используем 'http://localhost:3000' как fallback для локальной разработки
+        const API_BASE_URL = urlParams.get('server_url') || 'http://localhost:3000';
 
-        // Tasks
-        const tasks = [
-            { id: 'invite', title: 'Invite a Friend', reward: 50 },
-            { id: 'subscribe', title: 'Subscribe to Channel', reward: 30 },
-            { id: 'share', title: 'Share on Social Media', reward: 20 }
-        ];
+        // Проверяем, что API_BASE_URL корректно установлен
+        console.log("API Base URL:", API_BASE_URL);
 
-        let state = { countdown: 0 };
+        let userState = {
+            coins: 0,
+            tickets: 0,
+            lastClaimed: null
+        };
 
-        // Functions
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            document.querySelectorAll('.nav-bar button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`nav${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`).classList.add('active');
-        }
+        let lotteryState = {
+            prizePool: 0,
+            endTime: null,
+            countdown: 0,
+            totalParticipants: 0
+        };
 
+        // DOM элементы
+        const userCoinsElem = document.getElementById('userCoins');
+        const userTicketsElem = document.getElementById('userTickets');
+        const dailyClaimButton = document.getElementById('dailyClaimButton');
+        const prizePoolElem = document.getElementById('prizePool');
+        const countdownElem = document.getElementById('countdown');
+        const totalParticipantsElem = document.getElementById('totalParticipants');
+        const numTicketsInput = document.getElementById('numTicketsInput');
+        const buyTicketsButton = document.getElementById('buyTicketsButton');
+        const winnerModal = document.getElementById('winnerModal');
+        const winnerText = document.getElementById('winnerText');
+
+        // Получение данных пользователя с сервера
         async function fetchUser() {
-            const response = await fetch(`${API_URL}/user/${userId}`);
-            return response.json();
+            try {
+                // TelegramWebApp.initDataUnsafe содержит данные о пользователе Telegram
+                const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
+                console.log("Fetching user for Telegram ID:", telegramId);
+
+                const response = await fetch(`${API_BASE_URL}/api/user`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ telegramId: String(telegramId) })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to fetch user');
+                }
+                userState.coins = data.coins;
+                userState.tickets = data.tickets;
+                userState.lastClaimed = data.lastClaimed ? new Date(data.lastClaimed) : null;
+                console.log("User data fetched:", userState);
+                updateUI();
+                return data;
+            } catch (error) {
+                console.error('Error fetching user:', error);
+                Telegram.WebApp.showAlert(`Error fetching user: ${error.message}`);
+            }
         }
 
+        // Получение данных лотереи с сервера
         async function fetchLottery() {
-            const response = await fetch(`${API_URL}/lottery`);
-            return response.json();
-        }
-
-        async function buyTickets(count) {
-            const response = await fetch(`${API_URL}/buy-tickets`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ telegramId: userId, count })
-            });
-
-            if (response.ok) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/lottery`);
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to fetch lottery');
+                }
+                lotteryState.prizePool = data.prizePool;
+                lotteryState.endTime = new Date(data.endTime);
+                lotteryState.totalParticipants = data.participants.reduce((sum, p) => sum + p.tickets, 0); // Общее количество билетов
+                console.log("Lottery data fetched:", lotteryState);
                 updateUI();
-                TelegramWebApp.showAlert(`Bought ${count} tickets!`);
-            } else {
-                const { error } = await response.json();
-                TelegramWebApp.showAlert(error);
+                return data;
+            } catch (error) {
+                console.error('Error fetching lottery:', error);
+                Telegram.WebApp.showAlert(`Error fetching lottery: ${error.message}`);
             }
         }
 
-        async function completeTask(taskId) {
-            const task = tasks.find(t => t.id === taskId);
-            const response = await fetch(`${API_URL}/complete-task`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ telegramId: userId, taskId, reward: task.reward })
-            });
+        // Обновление UI на основе данных
+        function updateUI() {
+            userCoinsElem.textContent = Math.floor(userState.coins);
+            userTicketsElem.textContent = userState.tickets;
+            prizePoolElem.textContent = Math.floor(lotteryState.prizePool);
+            totalParticipantsElem.textContent = lotteryState.totalParticipants;
 
-            if (response.ok) {
-                updateUI();
-                TelegramWebApp.showAlert(`You received ${task.reward} coins!`);
+            // Обновление состояния кнопки "Claim Daily Coins"
+            const now = new Date();
+            const cooldownHours = 24; // Соответствует серверной логике
+            if (userState.lastClaimed && (now.getTime() - userState.lastClaimed.getTime()) < cooldownHours * 60 * 60 * 1000) {
+                dailyClaimButton.disabled = true;
+                const timeLeft = cooldownHours * 60 * 60 * 1000 - (now.getTime() - userState.lastClaimed.getTime());
+                const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                dailyClaimButton.textContent = `Next claim in ${hours}h ${minutes}m`;
             } else {
-                const { error } = await response.json();
-                TelegramWebApp.showAlert(error);
+                dailyClaimButton.disabled = false;
+                dailyClaimButton.textContent = 'Claim Daily Coins';
             }
         }
 
-        async function buyCoins(amount) {
-            const response = await fetch(`${API_URL}/buy-coins`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ telegramId: userId, amount })
-            });
-
-            if (response.ok) {
-                updateUI();
-                TelegramWebApp.showAlert(`Balance topped up by ${amount} coins!`);
-            } else {
-                TelegramWebApp.showAlert('Top-up error');
-            }
-        }
-
-        async function updateUI() {
-            const user = await fetchUser();
-            const lottery = await fetchLottery();
-
-            document.getElementById('prize').textContent = Math.floor(lottery.prizePool);
-            document.getElementById('balance1').textContent = user.coins;
-            document.getElementById('balance2').textContent = user.coins;
-            document.getElementById('userTickets').textContent = user.tickets;
-            document.getElementById('userInfo').textContent = `${username}: ${user.coins} coins`;
-
-            const blackHole = document.querySelector('.black-hole');
-            blackHole.style.setProperty('--max-prize', `"${lottery.maxPrize}$"`);
-
-            const tasksList = document.getElementById('tasksList');
-            tasksList.innerHTML = tasks.map(task => `
-                <div class="task">
-                    <p>${task.title} (+${task.reward} coins)</p>
-                    <button ${user.completedTasks.includes(task.id) ? 'disabled' : ''} 
-                            onclick="completeTask('${task.id}')">
-                        ${user.completedTasks.includes(task.id) ? 'Completed' : 'Claim'}
-                    </button>
-                </div>
-            `).join('');
-
-            state.countdown = Math.floor((new Date(lottery.endTime) - new Date()) / 1000);
-        }
-
+        // Обновление таймера обратного отсчета
         function updateCountdown() {
-            const countdown = document.getElementById('countdown');
-            const hours = Math.floor(state.countdown / 3600);
-            const minutes = Math.floor((state.countdown % 3600) / 60);
-            const seconds = state.countdown % 60;
-            countdown.textContent = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (lotteryState.endTime) {
+                const now = new Date();
+                const timeLeft = lotteryState.endTime.getTime() - now.getTime();
+                lotteryState.countdown = Math.max(0, Math.floor(timeLeft / 1000)); // В секундах
 
-            if (state.countdown > 0) {
-                state.countdown--;
+                const hours = Math.floor(lotteryState.countdown / 3600);
+                const minutes = Math.floor((lotteryState.countdown % 3600) / 60);
+                const seconds = lotteryState.countdown % 60;
+                countdownElem.textContent = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (lotteryState.countdown <= 0) {
+                    checkWinner(); // Проверяем победителя, если время истекло
+                    fetchLottery(); // Обновляем данные лотереи, так как должна начаться новая
+                }
             } else {
-                checkWinner();
+                countdownElem.textContent = 'Loading...';
             }
         }
 
+        // Проверка победителя (вызывается, когда лотерея должна завершиться)
         async function checkWinner() {
-            const lottery = await fetchLottery();
+            const lottery = await fetchLottery(); // Получаем актуальные данные лотереи
+            // Если лотерея больше не активна, значит, она завершилась и победитель определен
             if (!lottery.active) {
-                const modal = document.getElementById('winnerModal');
-                const winnerText = document.getElementById('winnerText');
-                const user = await fetchUser();
+                const user = await fetchUser(); // Обновляем данные пользователя, чтобы увидеть выигрыш
+                // Простая логика для демонстрации: если у пользователя были билеты,
+                // и сервер уже определил победителя, здесь мы просто показываем сообщение.
+                // В реальном приложении сервер должен явно сообщать, выиграл ли пользователь.
+                if (user.tickets > 0) {
+                    winnerText.textContent = 'Lottery ended! Check your coins for winnings.';
+                } else {
+                    winnerText.textContent = 'Lottery ended. You did not participate in this round.';
+                }
 
-                const won = user.tickets > 0 && Math.random() < user.tickets / 100;
-                winnerText.textContent = won
-                    ? `Congratulations! You won ${Math.floor(lottery.prizePool)} coins!`
-                    : 'Sorry, you didn’t win this time';
-
-                modal.style.display = 'block';
+                winnerModal.style.display = 'flex'; // Показываем модальное окно
             }
         }
 
+        // Закрыть модальное окно
         function closeModal() {
-            document.getElementById('winnerModal').style.display = 'none';
-            updateUI();
+            winnerModal.style.display = 'none';
+            updateUI(); // Обновляем UI после закрытия модального окна
         }
 
-        // Initialization
-        updateUI();
-        setInterval(updateCountdown, 1000);
-        setInterval(checkWinner, 60000);
+        // Обработчики событий
+        dailyClaimButton.addEventListener('click', async () => {
+            try {
+                const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
+                const response = await fetch(`${API_BASE_URL}/api/claim-daily-coins`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ telegramId: String(telegramId) })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    userState.coins = data.user.coins;
+                    userState.lastClaimed = new Date(data.user.lastClaimed);
+                    Telegram.WebApp.showAlert(data.message);
+                } else {
+                    Telegram.WebApp.showAlert(data.message || 'Failed to claim daily coins');
+                }
+                updateUI();
+            } catch (error) {
+                console.error('Error claiming daily coins:', error);
+                Telegram.WebApp.showAlert(`Error claiming daily coins: ${error.message}`);
+            }
+        });
 
-        document.getElementById('navHome').classList.add('active');
-        TelegramWebApp.MainButton.hide();
+        buyTicketsButton.addEventListener('click', async () => {
+            const numTickets = parseInt(numTicketsInput.value);
+            if (isNaN(numTickets) || numTickets <= 0) {
+                Telegram.WebApp.showAlert('Please enter a valid number of tickets.');
+                return;
+            }
+
+            try {
+                const telegramId = Telegram.WebApp.initDataUnsafe.user.id;
+                const response = await fetch(`${API_BASE_URL}/api/buy-tickets`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ telegramId: String(telegramId), numTickets })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    userState.coins = data.user.coins;
+                    userState.tickets = data.user.tickets;
+                    Telegram.WebApp.showAlert(data.message);
+                } else {
+                    Telegram.WebApp.showAlert(data.message || 'Failed to buy tickets');
+                }
+                numTicketsInput.value = ''; // Очищаем поле ввода
+                fetchLottery(); // Обновляем данные лотереи после покупки билетов
+                updateUI();
+            } catch (error) {
+                console.error('Error buying tickets:', error);
+                Telegram.WebApp.showAlert(`Error buying tickets: ${error.message}`);
+            }
+        });
+
+
+        // Инициализация: Загрузка данных и запуск таймеров
+        async function initializeApp() {
+            await fetchUser();
+            await fetchLottery();
+            updateCountdown(); // Обновляем таймер сразу
+            setInterval(updateCountdown, 1000); // Обновляем таймер каждую секунду
+            // Интервал для checkWinner можно оставить, но основная логика розыгрыша на сервере
+            // setInterval(checkWinner, 60000); // Проверяем победителя каждую минуту (если лотерея завершилась)
+        }
+
+        // Запускаем инициализацию при загрузке страницы
+        initializeApp();
     </script>
 </body>
 </html>
