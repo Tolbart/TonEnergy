@@ -23,17 +23,23 @@
         }
 
         /* Космический фон (реальное фото из космоса) */
+        <style>
+    /* ... (ваш существующий CSS-код) ... */
+
+    /* Космический фон (ваша реальная фотография из космоса) */
         body {
-            /* Вы можете заменить эту ссылку на свою.
-               Важно, чтобы изображение было доступно по CORS.
-               Если возникнут проблемы, загрузите изображение на GitHub Pages
-               и используйте относительный путь (например, background: url('images/space_bg.jpg');)
-            */
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/The_Helix_Nebula_%28NGC_7293%29.jpg/1920px-The_Helix_Nebula_%28NGC_7293%29.jpg') no-repeat center center fixed;
+        /* Используем вашу загруженную фотографию.
+           Убедитесь, что 'Space.jpg' находится в той же папке, что и lottery.html.
+           Если в подпапке (например, images/), путь будет url('images/Space.jpg')
+        */
+            background: url('Space.jpg') no-repeat center center fixed;
             background-size: cover;
             background-attachment: fixed;
             animation: fadeInBackground 2s forwards;
         }
+
+    /* ... (остальной ваш CSS-код) ... */
+</style>
 
         @keyframes fadeInBackground {
             from { opacity: 0; }
